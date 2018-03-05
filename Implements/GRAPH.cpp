@@ -1,5 +1,5 @@
 /* Created by Ishaan Shah on 09-12-2017.
- * Representation a graph and implementation of DFS & BFS
+ * Representation of a graph and implementation of DFS & BFS
 */
 
 #include <bits/stdc++.h>
