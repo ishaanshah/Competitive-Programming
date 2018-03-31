@@ -1,4 +1,4 @@
-/* Created by Ishaan Shah on 18/2/18.
+/* Created by Ishaan Shah on 18/02/18.
  * Problem Name: My Cow Ate My Homework
  * Problem Link: http://www.usaco.org/index.php?page=viewproblem2&cpid=762
 */
