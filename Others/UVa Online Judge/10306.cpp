@@ -1,6 +1,6 @@
 /* Created by Ishaan Shah on 28-06-2018.
-* Problem Name: 
-* Problem Link: 
+* Problem Name: e-Coins
+* Problem Link: http://uva.onlinejudge.org/external/103/10306.pdf
 */
 
 #include <bits/stdc++.h>
@@ -25,8 +25,8 @@ int dp(int i, int j, int k) {
 }
 
 int main() {
-	//freopen("input.in", "r", stdin);
-	//freopen("output.out", "w", stdout);
+	freopen("input.in", "r", stdin);
+	freopen("output.out", "w", stdout);
 	int t;
 	scanf("%d", &t);
 	while(t--) {
