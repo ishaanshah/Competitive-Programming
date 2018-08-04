@@ -1,61 +1,53 @@
-/* Created by Ishaan Shah on 16-04-2018.
-* Problem Name: Barn Painting
-* Problem Link: http://www.usaco.org/index.php?page=viewproblem2&cpid=766
+/* Created by Ishaan Shah on 03-08-2018.
+* Problem Name: Cow Checklist
+* Problem Link: http://www.usaco.org/index.php?page=viewproblem2&cpid=670
 */
 
 #include <bits/stdc++.h>
 
-#define mod 1000000007
+#define INF 1e9
 
 using namespace std;
 
-list<int> adj[100005];
-int clr[100005];
-vector<vector<long long int> > dp(100005, vector<long long> (3, -1));
+int g, h;
+int gx[1005], gy[1005], hx[1005], hy[1005];
+int memo[1005][1005][2], visited[1005][1005][2];
 
-int DFS(int root, int rclr, int parent, int pclr) {
-    if(rclr == pclr || (clr[root] >= 0 && rclr != clr[root])) return 0;
-    if(dp[root][rclr] >= 0) {
-        return dp[root][rclr];
-    }
-    dp[root][rclr] = 1;
-    for(int out: adj[root]) {
-        if(out == parent) continue;
-        long long canclr = 0;
-        for(int c = 0; c < 3; c++) {
-            canclr += DFS(out, c, root, rclr);
-            canclr %= mod;
-        }
-        dp[root][rclr] *= canclr;
-        dp[root][rclr] %= mod;
-    }
-    return dp[root][rclr];
+int dist(int x1, int x2, int y1, int y2) {
+	return pow(x1-x2, 2) + pow(y1-y2, 2);
+}
+
+int dp(int i, int j, int curr) {
+	if (i == h && j == g) {
+		if (curr == 0) return 0;
+		else return dist(gx[j], hx[i], gy[j], hy[i]);		
+	}
+	int &ans = memo[i][j][curr];
+	if (visited[i][j][curr]) return ans;
+	visited[i][j][curr] = 1;
+	ans = INF;
+	if (j+1 <= g) {
+		if (curr == 0)
+			ans = min(ans, dp(i, j+1, 1) + dist(hx[i], gx[j+1], hy[i], gy[j+1]));
+		else 
+			ans = min(ans, dp(i, j+1, 1) + dist(gx[j], gx[j+1], gy[j], gy[j+1]));
+	} 
+	if (i+1 <= h) { 
+		if (curr == 0)
+			ans = min(ans, dp(i+1, j, 0) + dist(hx[i], hx[i+1], hy[i], hy[i+1]));
+		else 
+			ans = min(ans, dp(i+1, j, 0) + dist(gx[j], hx[i+1], gy[j], hy[i+1]));
+	}
+	return ans; 
 }
 
 int main() {
-    freopen("barnpainting.in", "r", stdin);
-    freopen("barnpainting.out", "w", stdout);
-    int n, k;
-    cin >> n >> k;
-
-    for(int i = 0; i < n-1; i++) {
-        int a, b;
-        cin >> a >> b;
-        a--; b--;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
-    }
-
-    for(int i = 0; i < n; i++) {
-        clr[i] = -1;
-    }
-    
-    for(int i = 0; i < k; i++) {
-        int a, b;
-        cin >> a >> b;
-        a--; b--;
-        clr[a] = b;
-    }
-
-    cout << (DFS(0, 0, -1, -1) + DFS(0, 1, -1, -1) + DFS(0, 2, -1, -1)) % mod;
+	freopen("checklist.in", "r", stdin);
+	freopen("checklist.out", "w", stdout);
+	scanf("%d %d", &h, &g);
+	for (int i = 1; i <= h; i++) scanf("%d %d", &hx[i], &hy[i]);
+	for (int i = 1; i <= g; i++) scanf("%d %d", &gx[i], &gy[i]);
+	memset(visited, 0, sizeof visited);
+	int ans = dp(1, 0, 0);
+	printf("%d", ans);
 }
