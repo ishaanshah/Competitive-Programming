@@ -3,6 +3,8 @@
 * Problem Link: http://www.usaco.org/index.php?page=viewproblem2&cpid=597
 */
 
+// Check http://www.usaco.org/current/data/sol_angry_gold_jan16.html for better solution using Dynamic Programming
+
 #include <bits/stdc++.h>
 
 using namespace std;
