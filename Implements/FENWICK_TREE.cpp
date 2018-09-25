@@ -1,5 +1,5 @@
 /* Created by Ishaan Shah on 08-07-2018.
-* Implementation of Fenwick Tree take form CP3 by Steven & Felix Halim
+* Implementation of Fenwick Tree take from CP3 by Steven & Felix Halim
 */
 
 #include <bits/stdc++.h>
