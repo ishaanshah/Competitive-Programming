@@ -1,69 +1,84 @@
-/* Created by Ishaan Shah on 27-08-2018.
-* Problem Name: String Importance
-* Problem Link: https://www.iarcs.org.in/inoi/2018/zco2018/zco2018-question-paper.pdf
+/* Created by Ishaan Shah on 28-11-2018.
+* Problem Name: Substring Importance
+* Problem Link: https://www.codechef.com/ZCOPRAC/problems/STRIMPOR
 */
 
 #include <bits/stdc++.h>
 
 using namespace std;
 
-int n, k;
-string arr[100005];
-int px[3][100005], pz[3][100005];
-int wnd = 0;
-
 int main() {
-	freopen("input.in", "r", stdin);
-	freopen("output.out", "w", stdout);
-	
+    #ifndef ONLINE_JUDGE
+        freopen("input.in", "r", stdin);
+        freopen("output.out", "w", stdout);
+    #endif
+
 	int t;
-	scanf("%d", &t);
+	cin >> t;
 	while (t--) {
-		scanf("%d %d", &n, &k);
-		for (int i = 0; i < n; i += 1) cin >> arr[i];
-		if (arr[0] == "X") {
-			px[0][0] = 1;
-			pz[0][0] = 0;
-		} else if (arr[0] == "Z") {
-			px[0][0] = 0;
-			pz[0][0] = 1;
+		// Take input
+		int n, k;
+		cin >> n >> k;
+		string str[n];
+		for (int i = 0; i < n; i++) cin >> str[i];
+		
+		// Create prefix sum
+		int x[n][3], z[n][3];
+		for (int i = 0; i < 3; i++) {
+		    x[0][i] = 0;
+		    z[0][i] = 0;
 		}
-		px[1][0] = 0, pz[1][0] = 0;
-		px[2][0] = 0, pz[2][0] = 0;
-		for (int i = 1; i < n; i += 1) {
-			if (arr[i] == "Z") {
-				pz[i%3][i] = pz[i%3][i-1]+1;
-				px[i%3][i] = px[i%3][i-1];
-			}
-			else if (arr[i] == "X") {
-				px[i%3][i] = px[i%3][i-1]+1;
-				pz[i%3][i] = pz[i%3][i-1];
-			}
-			for (int j = 1; j <= 2; j++) {
-				pz[(i+j)%3][i] = pz[(i+j)%3][i-1];
-				px[(i+j)%3][i] = px[(i+j)%3][i-1];
-			}
+		if (str[0] == "X") x[0][0] = 1;
+        if (str[0] == "Z") z[0][0] = 1;
+		for (int i = 1; i < n; i++) {
+		    if (str[i] == "X") {
+		        x[i][i%3] = x[i-1][i%3]+1;
+                z[i][i%3] = z[i-1][i%3];
+		    } else if (str[i] == "Z") {
+		        z[i][i%3] = z[i-1][i%3]+1;
+                x[i][i%3] = x[i-1][i%3];
+		    } else {
+                x[i][i%3] = x[i-1][i%3];
+                z[i][i%3] = z[i-1][i%3];
+		    }
+            x[i][(i+1)%3] = x[i-1][(i+1)%3];
+            x[i][(i+2)%3] = x[i-1][(i+2)%3];
+            z[i][(i+1)%3] = z[i-1][(i+1)%3];
+            z[i][(i+2)%3] = z[i-1][(i+2)%3];
 		}
 		
-		int ans, t;
-		wnd = 0;
+		// Initialize window
+		int wnd = 0;
 		for (int i = 0; i < k; i++) {
-			t = (i+2)%3;
-			if (arr[i] == "X") wnd += pz[t][n-1] - pz[t][i];
-		} 
-		ans = wnd;
-		for (int i = 1; i < n-k; i++) {
-			t = (i+1)%3;
-			if (arr[i-1] == "X") wnd -= pz[t][n-1] - pz[t][i-1+k-1];
-			else if (arr[i-1] == "Z")
-				if (i > 1) wnd -= px[t][i-2];
-			
-			t = (i+k+1)%3;
-			if (arr[i+k-1] == "X") wnd += pz[t][n-1] - pz[t][i+k-1];
-			else if (arr[i+k-1] == "Z") wnd += px[t][i-1];
-			
-			ans = min(wnd, ans);
+			int j = (i+2)%3;
+			if (str[i] == "X") wnd += z[n-1][j]-z[i][j];
 		}
+		
+		// Slide the window
+		int ans = wnd;
+		for (int i = 1; i <= n-k-1; i++) {
+			// Remove element
+			int j = (i-1+1)%3;			
+			if (str[i-1] == "Z") {
+				wnd -= x[(i-1)][j];
+			}
+			
+			// Add element
+			j = (i+k-1+2)%3;
+			if (str[i+k-1] == "X") {
+				wnd += (z[n-1][j] - z[i+k-1][j]);
+			}
+			ans = min(ans, wnd);
+		}
+		
+		// Last window
+		wnd = 0;
+		for (int i = n-k; i < n; i++) {
+			if (str[i] == "Z") {
+				wnd += x[i][(i+1)%3];
+			}
+		}
+		ans = min(ans, wnd);
 		printf("%d\n", ans);
 	}
 }
