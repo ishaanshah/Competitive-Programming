@@ -16,8 +16,8 @@ set <int> st[1005];
 vector <int> adj[1005];
 
 int main() {
-	//freopen("input.in", "r", stdin);
-	//freopen("output.out", "w", stdout);
+	freopen("input.in", "r", stdin);
+	freopen("output.out", "w", stdout);
 	
 	scanf("%d %d %d %d", &n, &m, &s, &t);
 	for (int i = 0; i < m; i++) {
