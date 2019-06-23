@@ -1,5 +1,5 @@
 /* Created by Ishaan Shah on 20/1/18
- * Problem Name: Perfect
+ * Problem Name: Perfect Squares
  * Problem Link: http://codeforces.com/contest/914/problem/A
 */
 
