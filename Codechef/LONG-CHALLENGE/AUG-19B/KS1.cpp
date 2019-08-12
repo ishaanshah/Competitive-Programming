@@ -1,6 +1,6 @@
 /* Created by Ishaan Shah on 10-08-2019.
-* Problem Name: 
-* Problem Link: 
+* Problem Name: Guddu and his Mother
+* Problem Link: https://www.codechef.com/AUG19B/problems/KS1
 */
 
 #include <bits/stdc++.h>
