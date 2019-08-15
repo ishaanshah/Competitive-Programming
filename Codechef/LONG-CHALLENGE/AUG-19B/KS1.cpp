@@ -10,7 +10,7 @@
 using namespace std;
 
 typedef long long ll;
-typedef vector <int> vi;
+typedef vector <ll> vi;
 typedef pair<int, int> ii;
 typedef vector<ii> vii;
 
@@ -25,22 +25,20 @@ int main() {
     while (t--) {
         int n;
         cin >> n;
-        vi arr(n), pref_xor(n);
-        REP(i, 0, n) cin >> arr[i];
-        pref_xor[0] = arr[0];
-        REP(i, 1, n)
+        vi arr(n+1), pref_xor(n+1);
+        REP(i, 1, n+1) cin >> arr[i];
+        pref_xor[1] = arr[1];
+        REP(i, 1, n+1)
             pref_xor[i] = pref_xor[i-1]^arr[i];
-        int ans = 0;
-        REP(i, 0, n) {
-            REP(j, i+1, n) {
-                if (i == 0) {
-                    if (arr[j] == pref_xor[j-1]) ans += j;
-                }
-                else {
-                    if (arr[j] == (pref_xor[j-1]^pref_xor[i-1])) 
-                        ans += j-i;
-                }
-            }
+        ll ans = 0;
+        vi size(1000005, 0);
+        vi sum(1000005, 0);
+        size[0] = 1;
+        REP(i, 1, n+1) {
+            size[pref_xor[i]]++;
+            ans += (i-1)*(size[pref_xor[i]]-1);
+            ans -= sum[pref_xor[i]];
+            sum[pref_xor[i]] += i;
         }
         cout << ans << endl;
     }
