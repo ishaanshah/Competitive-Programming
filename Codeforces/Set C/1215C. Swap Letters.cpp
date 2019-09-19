@@ -25,16 +25,11 @@ int main() {
     string s, t;
     cin >> s >> t;
     vi pos1, pos2;
-    int cnt1 = 0, cnt2 = 0;
     REP(i, 0, n) {
         if (s[i] == 'a' && t[i] == 'b') 
             pos1.push_back(i+1);
         else if (s[i] == 'b' && t[i] == 'a')
             pos2.push_back(i+1);
-        if (s[i] == 'a')
-            cnt1++;
-        if (t[i] == 'a')
-            cnt2++;
     }
     if ((pos1.size()&1)^(pos2.size()&1)) {
         cout << -1;
