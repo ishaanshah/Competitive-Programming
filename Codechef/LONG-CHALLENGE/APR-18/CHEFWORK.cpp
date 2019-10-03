@@ -20,9 +20,11 @@ int main () {
     int at = 10000000;
     int tr = at;
     int a = at;
+    //taking input on for loop
     for(int i = 0; i < n; i++) {
         cin >> c[i];
     }
+    // updating the loop
     for(int i = 0; i < n; i++) {
         int t;
         cin >> t;
