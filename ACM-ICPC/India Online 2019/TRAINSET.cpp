@@ -1,6 +1,6 @@
 /* Created by Ishaan Shah on 18-10-2019.
-* Problem Name: 
-* Problem Link: 
+* Problem Name: Select Training Set
+* Problem Link: https://www.codechef.com/ICPCIN19/problems/TRAINSET
 */
 
 #include <bits/stdc++.h>
